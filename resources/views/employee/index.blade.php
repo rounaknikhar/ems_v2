@@ -9,7 +9,9 @@
 @section('script')
     <script>
         window.addEventListener('close-modal', event => {
-            $('#employeeModal').modal('hide');
+            $('#addEmployeeModal').modal('hide');
+            $('#updateEmployeeModal').modal('hide');
+            $('#confirmDeleteEmployeeModal').modal('hide');
         })
     </script>
 @endsection

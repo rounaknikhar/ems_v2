@@ -4,10 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Employee;
+use Livewire\WithPagination;
 
 class EmployeeShow extends Component
 {
-    public $email, $fullName, $position, $salary, $startDate, $status, $search;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    
+    public $email, $fullName, $position, $salary, $startDate, $status, $search, $orderBy, $employeeId;
 
     protected function rules() {
         if(!$this->status){
@@ -37,6 +41,48 @@ class EmployeeShow extends Component
         $this->dispatchBrowserEvent('close-modal');
     }
 
+    public function updateEmployee() {
+        $validatedData = $this->validate();
+        Employee::where('id', $this->employeeId)->update([
+            'email' => $validatedData['email'],
+            'fullName' => $validatedData['fullName'],
+            'position' => $validatedData['position'],
+            'salary' => $validatedData['salary'],
+            'startDate' => $validatedData['startDate'],
+            'status' => $validatedData['status'],
+        ]);
+
+        session()->flash('message', 'Employee data has been updated!');
+        $this->resetInput();
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
+    public function editEmployee(int $employeeId) {
+        $employee = Employee::find($employeeId);
+        if($employee) {
+            $this->employeeId = $employee->id;
+            $this->email = $employee->email;
+            $this->fullName = $employee->fullName;
+            $this->position = $employee->position;
+            $this->salary = $employee->salary;
+            $this->startDate = $employee->startDate;
+            $this->status = $employee->status;
+        } else {
+            redirect()->to('/employees');
+        }
+    }
+
+    public function deleteEmployee(int $employeeId) {
+        $this->employeeId = $employeeId;
+    }
+
+    public function confirmDeleteEmployee() {
+        Employee::find($this->employeeId)->delete();
+        session()->flash('message', 'Employee data has been deleted!');
+        $this->resetInput();
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
     public function resetInput() {
         $this->email = '';
         $this->fullName = '';
@@ -46,10 +92,22 @@ class EmployeeShow extends Component
         $this->status = '0';
     }
 
+    public function closeModal() {
+        $this->resetInput();
+    }
+
     public function render()
     {
-        $employees = Employee::where('fullName', 'like', '%'.$this->search.'%')->orWhere('email', 'like', '%'.$this->search.'%')->get();
+        $employees = Employee::where(
+            'fullName', 'like', '%'.$this->search.'%'
+            )->orWhere(
+                'email', 'like', '%'.$this->search.'%'
+                )->orderBy(
+                    'id', $this->orderBy?: 'DESC'
+                    )->paginate(10);
         
-        return view('livewire.employee-show', ['employees' => $employees]);
+        return view('livewire.employee-show', [
+            'employees' => $employees
+        ]);
     }
 }

@@ -26,6 +26,7 @@ $theme-colors: map-merge($theme-colors,
 body {
     background-color: $primary_light !important;
     font-family: 'Montserrat', sans-serif;
+    color: $grey !important;
 
     ::-webkit-scrollbar {
         width: 10px;
@@ -351,6 +352,31 @@ button {
     }
 }
 
+.pagination {
+    justify-content: center;
+    margin: 20px 0;
+
+    .page-link {
+        color: $grey !important;
+    }
+
+    .active {
+        .page-link {
+            background-color: $primary !important;
+            border-color: $primary !important;
+            color: $primary_light !important;
+        }
+    }
+}
+
+//bootstrap sizing media queries
+
+.w-md-auto {
+    @include media-breakpoint-up(md) {
+        width: auto !important;
+    }
+}
+
 @keyframes progressBar {
     from {
         width: 0%;
@@ -358,6 +384,5 @@ button {
 
     to {
         width: 100%;
-        display: none;
     }
 }
