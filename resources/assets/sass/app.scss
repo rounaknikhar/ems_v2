@@ -369,7 +369,19 @@ button {
     }
 }
 
-//bootstrap sizing media queries
+.btn,
+button {
+    border-radius: 0 !important;
+}
+
+.disabled {
+    .page-link {
+        border-radius: 0 !important;
+    }
+
+}
+
+page-link //bootstrap sizing media queries
 
 .w-md-auto {
     @include media-breakpoint-up(md) {

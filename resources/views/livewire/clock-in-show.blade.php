@@ -12,51 +12,63 @@
 
         <div class="w-100">
             <div class="table-responsive">
-                <table class="table clockIn-table">
+                <table class="table clockIn-table mb-0">
                     <thead>
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Clocked in</th>
                             <th scope="col">Clocked out</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">£</th>
                             <th scope="col" class="action"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <form wire:submit.prevent="saveClockIn">
                             <input type="hidden" wire:model="clockIn">
-                            <input type="submit" name="clockIn" class="btn btn-outline-primary mb-4"
+                            <input type="submit" name="clockIn" class="btn btn-outline-primary my-4"
                                 value="Clock in" />
                         </form>
-                        @foreach ($clockIns as $clockIn)
+                        @forelse ($clockIns as $clockIn)
                             <tr>
                                 <td>{{ date_format(new DateTime($clockIn->regEntry), 'd.m.Y') }}</td>
-                                <td>
+                                <td id="clockIn">
                                     {{ $clockIn->regEntry ? date_format(new DateTime($clockIn->regEntry), 'H:i:s') : '' }}
                                 </td>
-                                <td>
+                                <td id="clockOut">
                                     {{ $clockIn->regExit ? date_format(new DateTime($clockIn->regExit), 'H:i:s') : '' }}
                                 </td>
+                                <td id="totalHours">
+                                    @php
+                                        $time = new Carbon($clockIn->regEntry);
+                                        $shift_end_time = new Carbon($clockIn->regExit);
+                                        // echo \Carbon\Carbon::parse($time)->diffForHumans($shift_end_time);
+                                        echo \Carbon\Carbon::parse($shift_end_time)
+                                            ->diff($time)
+                                            ->format('%H:%i:%s');
+                                    @endphp
+
+                                </td>
+                                <td>£ made</td>
                                 <td>
-                                    @if (!$clockIn->regEntry)
-                                        <form wire:submit.prevent="saveClockIn">
-                                            <input type="hidden" wire:model="clockIn">
-                                            <input type="submit" name="clockIn" value="Clock in" />
-                                        </form>
-                                    @else
-                                        <form wire:submit.prevent="saveClockOut({{ $clockIn->id }})">
-                                            <input type="submit" class="btn btn-outline-info" name="clockOut"
-                                                value="Clock out" />
-                                        </form>
-                                    @endif
+                                    <form wire:submit.prevent="saveClockOut({{ $clockIn->id }})">
+                                        <input type="submit"
+                                            class="btn btn-outline-secondary {{ $clockIn->regExit ? 'd-none' : '' }}"
+                                            name="clockOut" value="Clock out" />
+                                    </form>
                                 </td>
                             </tr>
-                            {{-- @empty
+                        @empty
                             <tr>
                                 <td colspan="8">
                                     <p class="text-center">Not found!</p>
                                 </td>
-                            </tr> --}}
-                        @endforeach
+                            </tr>
+                        @endforelse
+                        <tr>
+                            <td colspan="4"><strong>Total £</strong></td>
+                            <td>£££</td>
+                        </tr>
 
                     </tbody>
                 </table>

@@ -21,11 +21,12 @@ class ClockInShow extends Component
         $this->clockIn = date('Y-m-d H:i:s');
         $this->clockOut = date('Y-m-d H:i:s');
         
-        $clockIns = ClockIn::where('employeeId', $this->employeeId)?->paginate(10);
+        $clockIns = ClockIn::where('employeeId', $this->employeeId)?->orderBy(
+            'id', 'DESC')->paginate(10);
         
         return view('livewire.clock-in-show', [
             'clockIns' => $clockIns,
-            'employeeId' => $this->employeeId
+            'employeeId' => $this->employeeId,
         ]);
     }
 
