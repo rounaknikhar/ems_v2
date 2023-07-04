@@ -28,5 +28,5 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('clock-in', [App\Http\Controllers\EmployeeController::class, 'clockIn'])->name('clock-in');
 
 Route::get('/clock-in/employee-schedule',
-[App\Http\Controllers\EmployeeController::class, 'employeeSchedule'])
+[App\Http\Controllers\ClockInController::class, 'index'])
 ->name('employee-schedule');

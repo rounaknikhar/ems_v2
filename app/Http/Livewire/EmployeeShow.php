@@ -19,7 +19,7 @@ class EmployeeShow extends Component
         }
         
         return [
-            'email' => ['required', 'email', 'not_in:' . auth()->user()->email ],
+            'email' => ['required', 'email', 'not_in:' . auth()->user()->email],
             'fullName' => 'required|min:6',
             'position' => 'required',
             'salary' => 'required',
