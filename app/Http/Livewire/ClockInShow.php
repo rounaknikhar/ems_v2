@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\ClockIn;
 use Livewire\WithPagination;
+use DateTime;
 
 class ClockInShow extends Component
 {
@@ -39,8 +40,9 @@ class ClockInShow extends Component
     }
 
     public function saveClockOut(int $clockInId) {
+        $dt = new DateTime();
         ClockIn::where('id', $clockInId)->update([
-            'regExit' => $this->clockOut,
+            'regExit' => $dt->format('Y-m-d H:i:s'),
         ]);
         session()->flash('message', 'Clocking out has been registered!');
     }

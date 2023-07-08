@@ -19,7 +19,6 @@
                             <th scope="col">Clocked in</th>
                             <th scope="col">Clocked out</th>
                             <th scope="col">Duration</th>
-                            <th scope="col">£</th>
                             <th scope="col" class="action"></th>
                         </tr>
                     </thead>
@@ -49,7 +48,6 @@
                                     @endphp
 
                                 </td>
-                                <td>£ made</td>
                                 <td>
                                     <form wire:submit.prevent="saveClockOut({{ $clockIn->id }})">
                                         <input type="submit"
@@ -65,10 +63,6 @@
                                 </td>
                             </tr>
                         @endforelse
-                        <tr>
-                            <td colspan="4"><strong>Total £</strong></td>
-                            <td>£££</td>
-                        </tr>
 
                     </tbody>
                 </table>
