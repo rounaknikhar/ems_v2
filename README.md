@@ -17,5 +17,5 @@ Open your code edit's terminal on the root directory and run <br>
 
 Open another terminal and run
 
-''php artisan serve```
+''php artisan serve``
 
