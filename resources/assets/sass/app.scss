@@ -13,6 +13,13 @@ $white : #fff;
 $grey : #333;
 $red : #ff4343;
 
+$grid-breakpoints: (xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px);
+
 //overriding bootstrap defaults
 $theme-colors: map-merge($theme-colors,
     ("primary": $primary,
@@ -83,7 +90,8 @@ h4 {
     color: $white;
 }
 
-input {
+input,
+select {
 
     &:focus,
     &:active {
@@ -381,7 +389,7 @@ button {
 
 }
 
-page-link //bootstrap sizing media queries
+//bootstrap sizing media queries
 
 .w-md-auto {
     @include media-breakpoint-up(md) {

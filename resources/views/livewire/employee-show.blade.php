@@ -10,13 +10,15 @@
             <div
                 class="w-md-auto mb-2 mb-md-0 w-100 d-flex flex-column flex-md-row
                 justify-content-md-start justify-content-center align-items-center">
-                <label class="d-md-inline d-none" for="orderBy">Order by</label>
-                <select wire:model="orderBy" name="orderBy" class="form-select w-md-auto mb-2 mb-md-0 w-100"
-                    id="orderBy">
-                    <option value="DESC" selected>Newest</option>
-                    <option value="ASC">Oldest</option>
-                </select>
-                <form class="form-inline w-md-auto w-100">
+                <div class="d-flex flex-row align-items-center w-md-auto w-100">
+                    <label class="d-md-inline d-none me-3" for="orderBy">Order by</label>
+                    <select wire:model="orderBy" name="orderBy" class="form-select w-md-auto mb-2 mb-md-0 w-md-auto w-100"
+                        id="orderBy">
+                        <option value="DESC" selected>Newest</option>
+                        <option value="ASC">Oldest</option>
+                    </select>
+                </div>
+                <form class="form-inline w-md-auto w-100 ms-md-3">
                     <input type="text" class="form-control shadow-none" placeholder="Search by name or email"
                         aria-label="search" aria-describedby="search" wire:model="search">
                 </form>
@@ -52,7 +54,7 @@
                             <td>{{ $employee->position }}</td>
                             <td>{{ $employee->salary }}</td>
                             <td>{{ date_format(new DateTime($employee->startDate), 'd/m/Y') }}</td>
-                            <td class="employee-status-result ml-2">
+                            <td class="employee-status-result">
                                 @if ($employee->status == 1)
                                     <i class="fa-solid fa-check"></i>
                                 @else

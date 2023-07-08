@@ -13,7 +13,6 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        /Index <br />
                         <a href="{{ route('employees') }}" class="btn btn-secondary w-100 mt-4">Manage Employees</a>
                     </div>
                 </div>
