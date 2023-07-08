@@ -18,3 +18,9 @@ jobs:
           username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
           server-dir: /ems/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            fileToExclude.txt 
+            **/public/**
